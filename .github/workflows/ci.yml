@@ -36,18 +36,18 @@ jobs:
         shell: pwsh
         run: |
           mkdir ./dist
-          cp ./js        ./dist -Recurse
-          cp ./lib       ./dist -Recurse
-          cp ./SAMPLE-*  ./dist
-          cp ./LICENSE   ./dist
-          cp ./README.md ./dist
+          Copy-Item ./js        ./dist/ -Recurse
+          Copy-Item ./lib       ./dist/ -Recurse
+          Copy-Item ./SAMPLE-*  ./dist/
+          Copy-Item ./LICENSE   ./dist/
+          Copy-Item ./README.md ./dist/
 
       - name: upload distributable artifact
         #if: startsWith(github.ref, 'refs/tags/v=')
         if: github.event_name == 'release'
         uses: actions/upload-artifact@v1
         with:
-          name: pwsh-github-action-base-dist
+          name: dist
           path: ./dist
   
   publish:
@@ -60,7 +60,7 @@ jobs:
       - name: download distributable artifact
         uses: actions/download-artifact@v1
         with:
-          name: pwsh-github-action-base-dist
+          name: dist
       
       - name: bundle distributable components
         shell: pwsh
