@@ -1,4 +1,5 @@
-ipmo Pester
+
+Import-Module Pester
 
 . $PSScriptRoot/../lib/ActionsCore.ps1
 

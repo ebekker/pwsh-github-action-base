@@ -19,4 +19,8 @@ jobs:
       
       - name: pester tests
         shell: pwsh
-        run: ./tests/ActionCore_tests.ps1
+        run: |
+          if (-not (Get-Module -ListAvailable Pester)) {
+            Install-Module Pester -Force
+          }
+          ./tests/ActionCore_tests.ps1
