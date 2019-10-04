@@ -24,3 +24,28 @@ jobs:
             Install-Module Pester -Force
           }
           ./tests/ActionCore_tests.ps1
+
+      # - name: bundle distributable components
+      #   shell: pwsh
+      #   run: |
+      #     Compress-Archive -DestinationPath ./dist.zip -Path @(
+      #       'js',  'lib'
+      #       'SAMPLE-*', 'LICENSE', 'README.md'
+      #     )
+
+      - name: assemble distributable components
+        shell: pwsh
+        run: |
+          mkdir ./dist
+          cp ./js        ./dist -Recurse
+          cp ./lib       ./dist -Recurse
+          cp ./SAMPLE-*  ./dist
+          cp ./LICENSE   ./dist
+          cp ./README.md ./dist
+
+      - name: upload artifacts for versioned tag
+        if: startsWith(github.ref, 'refs/tags/v=')
+        uses: actions/upload-artifact@v1
+        with:
+          name: pwsh-github-action-base-dist
+          path: ./dist
