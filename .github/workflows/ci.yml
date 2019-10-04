@@ -1,0 +1,21 @@
+
+name: CI
+
+on:
+  push:
+  release:
+    types: published
+
+jobs:
+
+  build:
+    runs-on: ubuntu-16.04
+    #runs-on: ubuntu-latest
+
+    steps:
+
+      - name: checkout
+        uses: actions/checkout@v1
+      
+      - name: pester tests
+        run: pwsh ./tests/ActionCore_tests.ps1
