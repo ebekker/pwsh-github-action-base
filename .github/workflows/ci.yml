@@ -73,7 +73,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          $tagName = $env:GITHUB_REF -replace 'refs/tags',''
+          $tagName = $env:GITHUB_REF -replace 'refs/tags/',''
           $githubHeaders = @{ Authorization = "token $($env:GITHUB_TOKEN)" }
           $githubRepo = $env:GITHUB_REPOSITORY
           $listRelsUrl = "https://api.github.com/repos/$($githubRepo)/releases"
@@ -83,9 +83,16 @@ jobs:
           if (-not ($listRels.Count)) {
             throw "list releases response did not resolve to any releases"
           }
+          else {
+            Write-Output "Found [$($listRels.Count)] release(s)."
+          }
+
           $thisRel = $listRels | Where-Object { $_.tag_name -eq $tagName }
           if (-not $thisRel) {
             throw "could not find release for tag [$tagName]"
+          }
+          else {
+            Write-Output "Found release [$($thisRel.tag_name)][$($thisRel.url)]"
           }
 
           $uploadUrl = $thisRel.upload_url -replace '{?name,label}','?name=pwsh-github-action-base-dist.zip'
