@@ -11,7 +11,6 @@ jobs:
   build:
     runs-on: ubuntu-16.04
     #runs-on: ubuntu-latest
-
     steps:
 
       - name: checkout
@@ -43,9 +42,55 @@ jobs:
           cp ./LICENSE   ./dist
           cp ./README.md ./dist
 
-      - name: upload artifacts for versioned tag
-        if: startsWith(github.ref, 'refs/tags/v=')
+      - name: upload distributable artifact
+        #if: startsWith(github.ref, 'refs/tags/v=')
+        if: github.event_name == 'release'
         uses: actions/upload-artifact@v1
         with:
           name: pwsh-github-action-base-dist
           path: ./dist
+  
+  publish:
+    needs: build
+    if: github.event_name == 'release'
+    steps:
+
+      - name: download distributable artifact
+        uses: actions/download-artifact@v1
+        with:
+          name: pwsh-github-action-base-dist
+      
+      - name: bundle distributable components
+        shell: pwsh
+        run: |
+          cd dist
+          Compress-Archive -DestinationPath ../pwsh-github-action-base-dist.zip -Path .
+
+      - name: attach asset to release
+        shell: pwsh
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          $tagName = $env:GITHUB_REF -replace 'refs/tags',''
+          $githubHeaders = @{ Authorization = "token $($env:GITHUB_TOKEN)" }
+          $githubRepo = $env:GITHUB_REPOSITORY
+          $listRelsUrl = "https://api.github.com/repos/$($githubRepo)/releases"
+          $listRelsResp = Invoke-WebRequest -Headers $githubHeaders $listRelsUrl
+          
+          $listRels = $listRelsResp.Content | ConvertFrom-Json
+          if (-not ($listRels.Count)) {
+            throw "list releases response did not resolve to any releases"
+          }
+          $thisRel = $listRels | Where-Object { $_.tag_name -eq $tagName }
+          if (-not $thisRel) {
+            throw "could not find release for tag [$tagName]"
+          }
+
+          $uploadUrl = $thisRel.upload_url -replace '{?name,label}','?name=pwsh-github-action-base-dist.zip'
+          $uploadHeaders = @{
+            "Authorization" = "token $($env:GITHUB_TOKEN)"
+            "Content-Type" = "application/zip"
+          }
+          Write-Output "Adding asset to [$uploadUrl]"
+          $uploadResp = Invoke-WebRequest -Headers $githubHeaders $uploadUrl `
+            -InFile pwsh-github-action-base-dist.zip
