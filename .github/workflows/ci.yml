@@ -95,7 +95,8 @@ jobs:
             Write-Output "Found release [$($thisRel.tag_name)][$($thisRel.url)]"
           }
 
-          $uploadUrl = $thisRel.upload_url -replace '{?name,label}','?name=pwsh-github-action-base-dist.zip'
+          $uploadUrl = $thisRel.upload_url.Replace(
+            '{?name,label}','?name=pwsh-github-action-base-dist.zip')
           $uploadHeaders = @{
             "Authorization" = "token $($env:GITHUB_TOKEN)"
             "Content-Type" = "application/zip"
