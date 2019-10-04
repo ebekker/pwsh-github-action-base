@@ -102,5 +102,5 @@ jobs:
             "Content-Type" = "application/zip"
           }
           Write-Output "Adding asset to [$uploadUrl]"
-          $uploadResp = Invoke-WebRequest -Headers $githubHeaders $uploadUrl `
+          $uploadResp = Invoke-WebRequest -Headers $uploadHeaders $uploadUrl `
             -InFile pwsh-github-action-base-dist.zip
