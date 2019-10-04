@@ -51,6 +51,8 @@ jobs:
           path: ./dist
   
   publish:
+    runs-on: ubuntu-16.04
+    #runs-on: ubuntu-latest
     needs: build
     if: github.event_name == 'release'
     steps:
