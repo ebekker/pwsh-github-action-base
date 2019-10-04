@@ -66,7 +66,7 @@ jobs:
         shell: pwsh
         run: |
           cd dist
-          Compress-Archive -DestinationPath ../pwsh-github-action-base-dist.zip -Path .
+          Compress-Archive -DestinationPath ../pwsh-github-action-base-dist.zip -Path ./*
 
       - name: attach asset to release
         shell: pwsh
