@@ -102,6 +102,13 @@ function Get-ActionInput {
     return "$($inputValue.Value)".Trim()
 }
 
+<#
+.SYNOPSIS
+Returns a map of all the available inputs and their values.
+.DESCRIPTION
+Lookups in the returned map are case-insensitive, as per the
+behavior of individual input lookup.
+#>
 function Get-ActionInputs {
     ## This makes sure the returned map looks up keys case-insensitively
     $inputsMap = [hashtable]::new([StringComparer]::OrdinalIgnoreCase)
@@ -135,7 +142,10 @@ function Set-ActionOutput {
     } -Message $Value
 }
 
-## TODO:
+<#
+.SYNOPSIS
+TODO:  NOT IMPLEMENTED!
+#>
 function Set-ActionFailed {
     ## Not implemented for now...
     throw "Not Implemented"
@@ -224,6 +234,14 @@ End an output group.
     Send-ActionCommand endgroup
 }
 
+<#
+.SYNOPSIS
+Executes the argument script block within and output group.
+.PARAMETER Name
+Name of the output group.
+.PARAMETER ScriptBlock
+Script block to execute in between opening and closing output group.
+#>
 function Invoke-ActionWithinOutputGroup {
     param(
         [Parameter(Position=0, Mandatory)]
@@ -253,6 +271,8 @@ if (-not (Get-Variable -Scope Script -Name CMD_STRING -ErrorAction SilentlyConti
 
 <#
 .SYNOPSIS
+Sends a command to the hosting Workflow/Action context.
+.DESCRIPTION
 Command Format:
   ::name key=value;key=value##message
 
