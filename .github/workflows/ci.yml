@@ -36,7 +36,7 @@ jobs:
         shell: pwsh
         run: |
           mkdir ./dist
-          Copy-Item ./js        ./dist/ -Recurse
+          Copy-Item ./_init     ./dist/ -Recurse
           Copy-Item ./lib       ./dist/ -Recurse
           Copy-Item ./SAMPLE-*  ./dist/
           Copy-Item ./LICENSE   ./dist/
