@@ -16,15 +16,17 @@ where GitHub Workflows are executed.
 The [distribution](https://github.com/ebekker/pwsh-github-action-base/releases/latest/download/pwsh-github-action-base-dist.zip)
  includes a number of base components:
 
-* `_init/index.js` - The entry point into invoking the Action.
-* `lib/ActionsCore.ps1` - A collection of cmdlets that support interfacing to the
+* **[`_init/index.js`](_init/index.js)** -
+  The entry point into invoking the Action.
+* **[`lib/ActionsCore.ps1`](lib/ActionsCore.ps1)** -
+  A collection of cmdlets that support interfacing to the
   Actions/Workflow environment for input, output and messaging.
-* `SAMPLE-action.ps1` - A sample script implementing a simple
-  Action script demonstrating some of the features made available from the
-  Core  library.
-* `SAMPLE-action.yml` - A sample Action metadata file that describes various
-  attributes such as a description, licensing, branding and formal input and
-  output values.
+* **[`SAMPLE-action.ps1`](SAMPLE-action.ps1)** -
+  A sample script implementing a simple Action script demonstrating some
+  of the features made available from the Core  library.
+* **[`SAMPLE-action.yml`](SAMPLE-action.yml)** -
+  A sample Action metadata file that describes various attributes such as a
+  description, licensing, branding and formal input and output values.
 
 ## Required Components
 
@@ -70,7 +72,7 @@ following `runs` attribute in your `actions.yml` metadata file:
 ```yaml
 runs:
   using: node12
-  main: js/index.js
+  main: _init_/index.js
 ```
 
 This configuration assumes you have placed the bootstrap JavaScript file
@@ -99,11 +101,11 @@ in which the action is being invoked.
 
 ## Optional Support Library
 
-In addition the required components above, you may choose to make use
-of the `lib/ActionsCore.ps1` utility script that defines a number of
-cmdlets that help interact with the Worklfow/Action environment context
-in a more natural way for PowerShell scripts.  These cmdlets are
-adaptations of the JavaScript Actions
+In addition to the required components above, you may choose to make use
+of the **[`lib/ActionsCore.ps1`](lib/ActionsCore.ps1)** utility script that
+defines a number of cmdlets that help interact with the Worklfow/Action
+environment context in a more natural way for PowerShell scripts.
+These cmdlets are adaptations of the JavaScript Actions
 [core package](https://github.com/actions/toolkit/tree/master/packages/core) provided in the
 [Actions Toolkit](https://github.com/actions/toolkit).  See that package
 description for details about what it provides
