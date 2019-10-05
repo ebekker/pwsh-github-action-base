@@ -37,4 +37,4 @@ branding:
 ## in PWSH, we still need a NodeJS entry point
 runs:
   using: node12
-  main: js/index.js
+  main: _init/index.js
