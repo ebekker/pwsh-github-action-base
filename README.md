@@ -3,7 +3,7 @@ Base support for implementing GitHub Actions in PowerShell Core
 
 ---
 
-[![](https://github.com/ebekker/pwsh-github-action-base/workflows/CI/badge.svg)](https://github.com/ebekker/pwsh-github-action-base/actions?workflow=CI)
+[![GitHub Workflow - CI](https://github.com/ebekker/pwsh-github-action-base/workflows/CI/badge.svg)](https://github.com/ebekker/pwsh-github-action-base/actions?workflow=CI)
 [![GitHub release (latest by date)](https://img.shields.io/github/v/release/ebekker/pwsh-github-action-base)](https://github.com/ebekker/pwsh-github-action-base/releases/latest/download/pwsh-github-action-base-dist.zip)
 [![docs for lib/ActionsCore](https://img.shields.io/badge/docs-lib/ActionsCore-blueviolet)](docs/README.md)
 
