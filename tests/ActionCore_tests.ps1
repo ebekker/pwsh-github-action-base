@@ -2,7 +2,7 @@
 Import-Module Pester
 Import-Module GitHubActions
 
-Set-Variable -Scope Script -Option Constant -Name EOL -Value ([System.Environment]::NewLine)
+Set-Variable -Scope Script -Option Constant -Name EOL -Value ([System.Environment]::NewLine) -ErrorAction Ignore
 
 Describe 'Set-ActionVariable' {
     $testCases = @(

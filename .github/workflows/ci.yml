@@ -43,7 +43,7 @@ jobs:
         run: |
           mkdir ./dist
           Copy-Item ./_init     ./dist/ -Recurse
-          Copy-Item ./lib       ./dist/ -Recurse
+         #Copy-Item ./lib       ./dist/ -Recurse
           Copy-Item ./SAMPLE-*  ./dist/
           Copy-Item ./LICENSE   ./dist/
           Copy-Item ./README.md ./dist/
