@@ -19,8 +19,14 @@ jobs:
       - name: pester tests
         shell: pwsh
         run: |
-          if (-not (Get-Module -ListAvailable Pester)) {
-            Install-Module Pester -Force
+          $neededModules = @(
+            'Pester'
+            'GitHubActions'
+          )
+          $neededModules | % {
+            if (-not (Get-Module -ListAvailable $_)) {
+              Install-Module $_ -Force
+            }
           }
           ./tests/ActionCore_tests.ps1
 
