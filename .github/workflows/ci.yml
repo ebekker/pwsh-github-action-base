@@ -28,7 +28,7 @@ jobs:
               Install-Module $_ -Force
             }
           }
-          ./tests/ActionCore_tests.ps1
+          ./tests/GitHubActions_tests.ps1
 
       # - name: bundle distributable components
       #   shell: pwsh
