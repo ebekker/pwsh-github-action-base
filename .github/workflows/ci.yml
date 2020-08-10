@@ -19,10 +19,16 @@ jobs:
       - name: pester tests
         shell: pwsh
         run: |
-          if (-not (Get-Module -ListAvailable Pester)) {
-            Install-Module Pester -Force
+          $neededModules = @(
+            'Pester'
+            'GitHubActions'
+          )
+          $neededModules | % {
+            if (-not (Get-Module -ListAvailable $_)) {
+              Install-Module $_ -Force
+            }
           }
-          ./tests/ActionCore_tests.ps1
+          ./tests/GitHubActions_tests.ps1
 
       # - name: bundle distributable components
       #   shell: pwsh
@@ -37,7 +43,6 @@ jobs:
         run: |
           mkdir ./dist
           Copy-Item ./_init     ./dist/ -Recurse
-          Copy-Item ./lib       ./dist/ -Recurse
           Copy-Item ./SAMPLE-*  ./dist/
           Copy-Item ./LICENSE   ./dist/
           Copy-Item ./README.md ./dist/
@@ -51,8 +56,7 @@ jobs:
           path: ./dist
   
   publish:
-    runs-on: ubuntu-16.04
-    #runs-on: ubuntu-latest
+    runs-on: ubuntu-latest
     needs: build
     if: github.event_name == 'release'
     steps:

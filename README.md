@@ -5,7 +5,6 @@ Base support for implementing GitHub Actions in PowerShell Core
 
 [![GitHub Workflow - CI](https://github.com/ebekker/pwsh-github-action-base/workflows/CI/badge.svg)](https://github.com/ebekker/pwsh-github-action-base/actions?workflow=CI)
 [![GitHub release (latest by date)](https://img.shields.io/github/v/release/ebekker/pwsh-github-action-base)](https://github.com/ebekker/pwsh-github-action-base/releases/latest/download/pwsh-github-action-base-dist.zip)
-[![docs for lib/ActionsCore](https://img.shields.io/badge/docs-lib/ActionsCore-blueviolet)](docs/README.md)
 
 ---
 
@@ -18,15 +17,17 @@ The [distribution](https://github.com/ebekker/pwsh-github-action-base/releases/l
 
 * **[`_init/index.js`](_init/index.js)** -
   The entry point into invoking the Action.
-* **[`lib/ActionsCore.ps1`](lib/ActionsCore.ps1)** -
-  A collection of cmdlets that support interfacing to the
-  Actions/Workflow environment for input, output and messaging.
 * **[`SAMPLE-action.ps1`](SAMPLE-action.ps1)** -
   A sample script implementing a simple Action script demonstrating some
   of the features made available from the Core  library.
 * **[`SAMPLE-action.yml`](SAMPLE-action.yml)** -
   A sample Action metadata file that describes various attributes such as a
   description, licensing, branding and formal input and output values.
+
+Additionally, the sample Action shows how to make use of the
+[GitHubActions module](https://www.powershellgallery.com/packages/GitHubActions)
+to get access to the GH Actions/Workflow environment for input, output
+and messaging.  More details can be found [below](#optional-support-module)
 
 ## Required Components
 
@@ -43,16 +44,19 @@ the GitHub API.
 
 ### `action.yml` - The Action Metadata
 
-As per the GitHub Actions mechanism, you must provide a [metadata file](https://help.github.com/en/articles/metadata-syntax-for-github-actions) that describes
-various attributes about your Action, including any formal inputs and outputs.
-You use this metadata file to enumerate any _required_ inputs that must be
-provided by a Workflow definition.
+As per the GitHub Actions mechanism, you must provide a
+[metadata file](https://help.github.com/en/articles/metadata-syntax-for-github-actions)
+that describes various attributes about your Action, including any formal inputs
+and outputs. You use this metadata file to enumerate any _required_ inputs that
+must be provided by a Workflow definition.
 
-##### `runs` Entry Point Attribute
+#### `runs` Entry Point Attribute
 
 The most important attribute in this file for our purposes is the `runs`
 setting which has two child settings, `using` and `main`.  This attribute
-indicates what is the [_type_](https://help.github.com/en/articles/about-actions#types-of-actions) of your Action and how to run it.
+indicates what is the
+[_type_](https://help.github.com/en/articles/about-actions#types-of-actions)
+of your Action and how to run it.
 
 There are two main types of Actions, one based on Docker containers and
 one based on JavaScript (NodeJS).  While Docker Actions give you the ability
@@ -60,8 +64,9 @@ to define and _carry_ the entire runtime with you, they are slower to start
 and limited to only executing in Linux environments.
 
 JavaScript Actions however are simpler and more lightweight, and therefore
-quicker to start, and they can run on any of the supported platforms (Linux, Windows, MacOS).  They also execute directly in the hosted virtual machine
-where the Workflow runs instead of a dedicated container.
+quicker to start, and they can run on any of the supported platforms
+(Linux, Windows, MacOS).  They also execute directly in the hosted virtual
+machine where the Workflow runs instead of a dedicated container.
 
 Because of these advantages, this repo hosts a solution that is based on
 JavaScript-type Actions.  A stub JavaScript script is provided to bootstrap
@@ -99,15 +104,16 @@ The working directory is the same as at the start of the bootstrap
 script which is the root of the cloned repository of the Workflow
 in which the action is being invoked.
 
-## Optional Support Library
+## Optional Support Module
 
-In addition to the required components above, you may choose to make use
-of the **[`lib/ActionsCore.ps1`](lib/ActionsCore.ps1)** utility script that
-defines a number of cmdlets that help interact with the Worklfow/Action
-environment context in a more natural way for PowerShell scripts.
-These cmdlets are adaptations of the JavaScript Actions
+In addition to the required components above, you may choose to make use of the
+**[`GitHubActions` PowerShell module](https://www.powershellgallery.com/packages/GitHubActions)**
+utility script that defines a number of cmdlets that help interact with the
+Worklfow/Action environment context in a more natural way for PowerShell
+scripts. These cmdlets are adaptations of the JavaScript Actions
 [core package](https://github.com/actions/toolkit/tree/master/packages/core) provided in the
 [Actions Toolkit](https://github.com/actions/toolkit).  See that package
 description for details about what it provides
 
-For details about the counterpart cmdlets, go to the [docs](docs/README.md).
+For details about the counterpart cmdlets, go to the
+[docs](https://github.com/ebekker/pwsh-github-action-tools/blob/master/docs/GitHubActions/README.md).

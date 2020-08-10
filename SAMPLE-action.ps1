@@ -4,14 +4,24 @@
 ## This is a sample GitHub Action script written in PowerShell Core.
 ## You can write your logic in PWSH to perform GitHub Actions.
 ##
+
+
 ## You interface with the Actions/Workflow system by interacting
-## with the environment.  The `ActionsCore.ps1` library makes this
-## easier and more natural.
-##
+## with the environment.  The `GitHubActions` module makes this
+## easier and more natural by wrapping up access to the Workflow
+## environment in PowerShell-friendly constructions and idioms
+if (-not (Get-Module -ListAvailable GitHubActions)) {
+    ## Make sure the GH Actions module is installed from the Gallery
+    Install-Module GitHubActions -Force
+}
 
 ## Load up some common functionality for interacting
 ## with the GitHub Actions/Workflow environment
-. ./lib/ActionsCore.ps1
+Import-Module GitHubActions
+
+##
+## ***** Put your logic here *****
+##
 
 ## Pull in some inputs
 $salutation = Get-ActionInput salutation -Required

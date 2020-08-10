@@ -1,9 +1,8 @@
 
 Import-Module Pester
+Import-Module GitHubActions
 
-. $PSScriptRoot/../lib/ActionsCore.ps1
-
-Set-Variable -Scope Script -Option Constant -Name EOL -Value ([System.Environment]::NewLine)
+Set-Variable -Scope Script -Option Constant -Name EOL -Value ([System.Environment]::NewLine) -ErrorAction Ignore
 
 Describe 'Set-ActionVariable' {
     $testCases = @(
