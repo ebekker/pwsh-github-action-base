@@ -9,8 +9,8 @@ on:
 jobs:
 
   build:
-    runs-on: ubuntu-16.04
-    #runs-on: ubuntu-latest
+    runs-on: ubuntu-latest
+    #runs-on: ubuntu-16.04
     steps:
 
       - name: checkout
@@ -28,19 +28,19 @@ jobs:
           gist_token: ${{ secrets.GIST_TOKEN }}
           gist_badge_label: Tests %ExecutedAt%
 
-      - name: pester tests orig
-        shell: pwsh
-        run: |
-          $neededModules = @(
-            'Pester'
-            'GitHubActions'
-          )
-          $neededModules | % {
-            if (-not (Get-Module -ListAvailable $_)) {
-              Install-Module $_ -Force
-            }
-          }
-          ./tests/GitHubActions_tests.ps1
+      # - name: pester tests manually
+      #   shell: pwsh
+      #   run: |
+      #     $neededModules = @(
+      #       'Pester'
+      #       'GitHubActions'
+      #     )
+      #     $neededModules | % {
+      #       if (-not (Get-Module -ListAvailable $_)) {
+      #         Install-Module $_ -Force
+      #       }
+      #     }
+      #     ./tests/GitHubActions_tests.ps1
 
       # - name: bundle distributable components
       #   shell: pwsh
@@ -66,6 +66,29 @@ jobs:
         with:
           name: dist
           path: ./dist
+
+
+  ## For testing out tests on Windows
+  build-on-win:
+    runs-on: windows-latest
+    continue-on-error: true
+    steps:
+
+      - name: checkout
+        uses: actions/checkout@v1
+      
+      - name: pester tests
+        uses: zyborg/pester-tests-report@v1.2.0
+        with:
+          include_paths: ./tests/GitHubActions_tests.ps1
+          exclude_tags: SkipCI
+          report_name: action_base_tests
+          report_title: Action Base Tests
+          gist_name: pwsh-github-action-base_tests.md
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          gist_token: ${{ secrets.GIST_TOKEN }}
+          gist_badge_label: Tests %ExecutedAt%
+    
   
   publish:
     runs-on: ubuntu-latest
