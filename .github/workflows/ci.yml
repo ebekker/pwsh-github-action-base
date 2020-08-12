@@ -82,12 +82,9 @@ jobs:
         with:
           include_paths: ./tests/GitHubActions_tests.ps1
           exclude_tags: SkipCI
-          report_name: action_base_tests
-          report_title: Action Base Tests
-          gist_name: pwsh-github-action-base_tests.md
+          report_name: action_base_tests-on-win
+          report_title: Action Base Tests (On Windows)
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          gist_token: ${{ secrets.GIST_TOKEN }}
-          gist_badge_label: Tests %ExecutedAt%
     
   
   publish:
