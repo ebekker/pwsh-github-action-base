@@ -17,6 +17,17 @@ jobs:
         uses: actions/checkout@v1
       
       - name: pester tests
+        uses: zyborg/pester-tests-report@vHEAD
+        with:
+          include_paths: ./tests/GitHubActions_tests.ps1
+          report_name: action_base_tests
+          report_title: Action Base Tests
+          gist_name: pwsh-github-action-base_tests.md
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          gist_token: ${{ secrets.GIST_TOKEN }}
+          gist_badge_label: Tests %ExecutedAt%
+
+      - name: pester tests orig
         shell: pwsh
         run: |
           $neededModules = @(
