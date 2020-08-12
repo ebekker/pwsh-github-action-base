@@ -92,7 +92,10 @@ Describe 'Get-ActionInputs' {
         @{ Name = 'InPut2' ; Should = @{ BeNullOrEmpty = $true } }
         @{ Name = 'InPut3' ; Should = @{ Be = $true; ExpectedValue = "Value 3" } }
     )
-    It 'Given 2 predefined inputs' {
+
+    ## We skip this test during CI build because we can't be sure of the actual
+    ## number of INPUT_ environment variables in the real GH Workflow environment
+    It 'Given 2 predefined inputs' -Tag 'SkipCI' {
         $inputs = Get-ActionInputs
         $inputs.Count | Should -Be 2
     }

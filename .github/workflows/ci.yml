@@ -20,6 +20,7 @@ jobs:
         uses: zyborg/pester-tests-report@v1.2.0
         with:
           include_paths: ./tests/GitHubActions_tests.ps1
+          exclude_tags: SkipCI
           report_name: action_base_tests
           report_title: Action Base Tests
           gist_name: pwsh-github-action-base_tests.md
