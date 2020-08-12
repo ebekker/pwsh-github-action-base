@@ -17,7 +17,7 @@ jobs:
         uses: actions/checkout@v1
       
       - name: pester tests
-        uses: zyborg/pester-tests-report@vHEAD
+        uses: zyborg/pester-tests-report@v1.1.0
         with:
           include_paths: ./tests/GitHubActions_tests.ps1
           report_name: action_base_tests
