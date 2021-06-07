@@ -1,6 +1,8 @@
 # pwsh-github-action-base
 Base support for implementing GitHub Actions in PowerShell Core
 
+:star: I appreciate your star, it helps me decide to which OSS projects I should allocate my spare time.
+
 ---
 
 [![GitHub Workflow - CI](https://github.com/ebekker/pwsh-github-action-base/workflows/CI/badge.svg)](https://github.com/ebekker/pwsh-github-action-base/actions?workflow=CI)
